@@ -2,10 +2,10 @@ package main
 
 import (
 	"log/slog"
-	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/joho/godotenv"
 )
 
@@ -21,15 +21,17 @@ func main() {
         port = ":" + val
     }
 
-	e.POST("/api/create", func(c echo.Context) error {
-		slog.Info("Create inteface called")
-		return c.String(http.StatusOK, "Hello, World!")
-	})
 
-	e.GET("api/hello", func(c echo.Context) error {
-		slog.Info("Hello inteface called")
-		return c.String(http.StatusOK, "Hello, Greet!")
-	})
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	e.GET("api/hello", SayHello)
+
+	// CRUD operations
+	e.POST("/api/content", CreateResource)
+	e.GET("/api/content", ReadResource)
+	e.PUT("/api/content", UpdateResource)
+	e.DELETE("/api/content", DeleteResource)
 
 	e.Logger.Fatal(e.Start(port))
 }
