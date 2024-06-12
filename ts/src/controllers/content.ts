@@ -32,6 +32,7 @@ export async function read(request: HttpRequest, context: InvocationContext): Pr
             .select()
             .from(ContentTable)
             .where(eq(ContentTable.id, id))
+            .limit(1)
         if (found.length === 0) {
             throw new RangeError()
         }
