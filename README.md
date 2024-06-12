@@ -2,7 +2,7 @@
 
 This repository consists of the same Azure Function Implementation for the following languages in order to benchmark them:
 - Go
-- JavaScript
+- TypeScript
 - Java
 - Python
 
