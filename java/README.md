@@ -7,8 +7,8 @@ This project implements 2 endpoints:
 1. /api/content CRUD implementation
     1. POST /api/AzureWebAdapter/content CREATE resource Body: {"color": "#ffffff", "title": "white"}
     1. GET /api/AzureWebAdapter/content?id=1 READ resource
-    1. PUT /api/AzureWebAdapter/content?id=1 UPDATE resource Body: {"color": "#ffffff", "title": "white"}
-    1. DELETE /api/AzureWebAdapter/content?id=1 DELETE resource
+    1. POST /api/AzureWebAdapter/content/update?id=1 UPDATE resource Body: {"color": "#ffffff", "title": "white"}
+    1. POST /api/AzureWebAdapter/content/delete?id=1 DELETE resource
 
 ## Install
 

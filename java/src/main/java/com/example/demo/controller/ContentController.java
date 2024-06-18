@@ -42,7 +42,7 @@ public class ContentController {
     return ResponseEntity.ok(dto);
   }
 
-  @PutMapping
+  @PostMapping("/update")
   public ResponseEntity<ContentDTO> updateContent(
       @RequestBody ContentRequest request,
       @RequestParam(name = "id") Long id) {
@@ -58,7 +58,7 @@ public class ContentController {
     return ResponseEntity.ok(content.toDTO());
   }
 
-  @DeleteMapping()
+  @PostMapping("/delete")
   public ResponseEntity<ContentDTO> deleteContent(@RequestParam(name = "id") Long id) {
     log.info("Deleting content");
     var contentOptional = contentRepository.findById(id);
