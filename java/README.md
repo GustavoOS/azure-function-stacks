@@ -25,8 +25,17 @@ mvn package
 mvn azure-functions:run
 ```
 
-##
-
 ## Details
 - Spring Boot 3
 - ORM: Spring Data JPA
+
+## Local Result
+
+Testing using local database, from a cold start making a GET request into content endpoint.
+
+Language | Time (ms)
+---|---
+Go | 266
+TypeScript | 344
+Python | 2350
+Java | 5200
