@@ -4,7 +4,7 @@ import { hello } from "../controllers/hello";
 
 
 app.http('hello', {
-    methods: ['GET'],
+    methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: hello
 });

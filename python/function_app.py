@@ -51,18 +51,34 @@ class Content(Base):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-# Functions
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
-@app.route(route="hello", methods=["GET"])
+@app.route(route="hello")
 def hello(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     return func.HttpResponse(f"Hello, World!")
 
 
-@app.route(route="content", methods=["GET"])
-def content(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="create_content", auth_level=func.AuthLevel.ANONYMOUS)
+def create_content(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    try:
+        body = req.get_json()
+        content = Content(color=body['color'], title=body['title'])
+        session.add(content)
+        session.commit()
+        return func.HttpResponse(json.dumps(content.as_dict()), status_code=201)
+    except KeyError:
+        return func.HttpResponse("Missing parameters", status_code=400)
+    except Exception as e:
+        traceback.print_exc()
+        logger.error(e)
+        return func.HttpResponse("", status_code=500)
+
+
+@app.route(route="read_content", auth_level=func.AuthLevel.ANONYMOUS)
+def get_content(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     try:
         id = int(req.params.get('id', "s"))
@@ -80,25 +96,8 @@ def content(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse("", status_code=500)
 
 
-@app.route(route="content", methods=["POST"])
-def create(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
-    try:
-        body = req.get_json()
-        content = Content(color=body['color'], title=body['title'])
-        session.add(content)
-        session.commit()
-        return func.HttpResponse(json.dumps(content.as_dict()), status_code=201)
-    except KeyError:
-        return func.HttpResponse("Missing parameters", status_code=400)
-    except Exception as e:
-        traceback.print_exc()
-        logger.error(e)
-        return func.HttpResponse("", status_code=500)
-
-
-@app.route(route="content", methods=["PUT"])
-def update(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="update_content", auth_level=func.AuthLevel.ANONYMOUS)
+def update_content(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     try:
         id = int(req.params.get('id', "s"))
@@ -123,8 +122,8 @@ def update(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse("", status_code=500)
 
 
-@app.route(route="content", methods=["DELETE"])
-def delete(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="delete_content", auth_level=func.AuthLevel.ANONYMOUS)
+def delete_content(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     try:

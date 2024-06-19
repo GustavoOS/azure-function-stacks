@@ -26,6 +26,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("api/hello", SayHello)
+	e.POST("api/hello", SayHello)
 
 	// CRUD operations
 	e.POST("/api/content", CreateResource)

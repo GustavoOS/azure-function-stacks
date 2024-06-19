@@ -4,9 +4,9 @@ This project implements 2 endpoints:
 1. /api/hello returns hello world
 1. /api/content CRUD implementation
     1. POST /api/content CREATE resource Body: {"color": "#ffffff", "title": "white"}
-    1. GET /api/content?id=1 READ resource
-    1. PUT /api/content?id=1 UPDATE resource Body: {"color": "#ffffff", "title": "white"}
-    1. DELETE /api/content?id=1 DELETE resource
+    1. GET and POST /api/read_content?id=1 READ resource
+    1. POST /api/update_content?id=1 UPDATE resource Body: {"color": "#ffffff", "title": "white"}
+    1. POST /api/delete_content?id=1 DELETE resource
 
 ## Install
 

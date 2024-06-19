@@ -25,6 +25,27 @@ mvn package
 mvn azure-functions:run
 ```
 
+## Deploy
+1. Change DB connection details under src/main/resources/application.properties to desired database
+1. Login with azure CLI 
+    ```sh
+    az login
+    ```
+1. Create function app with Java 17 runtime
+1. Change pom.xml:
+    * Add <subscriptionId></subscriptionId> with your subscriptionId under azure-functions-maven-plugin configuration
+    * Change the following properties
+        - functionAppName
+        - functionResourceGroup
+        - functionAppRegion
+        - functionAppServicePlanName
+        - functionPricingTier under properties
+1. Run deploy script 
+    ```sh
+    mvn azure-functions:deploy
+    ```
+
+
 ## Details
 - Spring Boot 3
 - ORM: Spring Data JPA
